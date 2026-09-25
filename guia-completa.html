@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Roadmap AI Security Engineering — Miguel Muzo</title>
+<style>
+  :root{
+    --bg:#08110f;
+    --panel:#0f1c18;
+    --panel2:#13231e;
+    --text:#eaf7f0;
+    --muted:#a9c0b6;
+    --line:#254136;
+    --accent:#61F571;
+    --accent2:#8de3ff;
+    --warn:#ffd166;
+    --danger:#ff7b7b;
+    --ok:#7df0b2;
+    --shadow:0 12px 35px rgba(0,0,0,.24);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background:
+      radial-gradient(circle at 12% 0%, rgba(97,245,113,.10), transparent 30rem),
+      radial-gradient(circle at 92% 8%, rgba(141,227,255,.08), transparent 28rem),
+      var(--bg);
+    color:var(--text);
+    line-height:1.55;
+  }
+  a{color:var(--accent2); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:34px 22px 80px}
+  .hero{
+    background:linear-gradient(135deg, rgba(97,245,113,.12), rgba(141,227,255,.06));
+    border:1px solid var(--line);
+    border-radius:26px;
+    padding:34px;
+    box-shadow:var(--shadow);
+  }
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:.78rem;
+    font-weight:800;
+    color:var(--accent);
+  }
+  h1{font-size:clamp(2rem,5vw,4rem);line-height:1.02;margin:.35rem 0 1rem;max-width:900px}
+  h2{font-size:1.65rem;margin:0 0 .9rem}
+  h3{font-size:1.16rem;margin:0 0 .55rem}
+  p{margin:.45rem 0 1rem}
+  .lead{font-size:1.12rem;color:#d9eee4;max-width:900px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0}
+  .chip{
+    padding:8px 12px;border-radius:999px;border:1px solid var(--line);
+    background:rgba(255,255,255,.03);color:#dcefe6;font-weight:650;font-size:.9rem
+  }
+  .chip.main{border-color:rgba(97,245,113,.55);color:var(--accent)}
+  .nav{
+    display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 0
+  }
+  .nav a{
+    color:var(--text);border:1px solid var(--line);border-radius:12px;padding:8px 10px;
+    background:rgba(255,255,255,.025);font-size:.9rem
+  }
+  section{margin-top:28px}
+  .grid{display:grid;gap:16px}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .card{
+    border:1px solid var(--line);background:var(--panel);border-radius:20px;padding:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,.12)
+  }
+  .card.soft{background:var(--panel2)}
+  .metric{font-size:2rem;font-weight:850;color:var(--accent);line-height:1}
+  .sub{color:var(--muted);font-size:.92rem}
+  .callout{
+    border-left:4px solid var(--accent);padding:14px 16px;background:rgba(97,245,113,.07);
+    border-radius:0 14px 14px 0;margin:14px 0
+  }
+  .callout.warn{border-left-color:var(--warn);background:rgba(255,209,102,.07)}
+  .callout.info{border-left-color:var(--accent2);background:rgba(141,227,255,.07)}
+  .track{
+    display:grid;grid-template-columns:175px 1fr;gap:16px;align-items:start;
+    border-top:1px solid var(--line);padding:20px 0
+  }
+  .track:first-child{border-top:none}
+  .phase{
+    position:sticky;top:12px;border:1px solid var(--line);background:var(--panel2);
+    border-radius:16px;padding:14px
+  }
+  .phase .num{font-size:2rem;font-weight:900;color:var(--accent);line-height:1}
+  .phase .when{color:var(--muted);font-size:.9rem;margin-top:6px}
+  ul.clean{padding-left:1.1rem;margin:.55rem 0}
+  ul.clean li{margin:.32rem 0}
+  .checklist{display:grid;gap:8px;margin-top:12px}
+  label.check{
+    display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:12px;
+    background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.045)
+  }
+  label.check input{margin-top:.28rem;accent-color:var(--accent);transform:scale(1.1)}
+  label.check span{flex:1}
+  .tag{
+    display:inline-block;padding:3px 8px;border-radius:999px;background:rgba(141,227,255,.08);
+    border:1px solid rgba(141,227,255,.18);font-size:.78rem;color:#ccefff;margin-right:4px
+  }
+  table{width:100%;border-collapse:collapse;border-spacing:0;overflow:hidden;border-radius:16px}
+  th,td{border-bottom:1px solid var(--line);padding:12px 10px;text-align:left;vertical-align:top}
+  th{color:var(--accent);font-size:.85rem;text-transform:uppercase;letter-spacing:.05em}
+  tr:last-child td{border-bottom:none}
+  code{
+    background:#081511;border:1px solid #1c382f;border-radius:7px;padding:.08rem .36rem;color:#baf4c2
+  }
+  pre{
+    overflow:auto;background:#07100d;border:1px solid var(--line);border-radius:16px;padding:16px;
+    color:#ccefe0
+  }
+  .roadmap-box{
+    background:linear-gradient(180deg,rgba(97,245,113,.06),rgba(255,255,255,.015));
+    border:1px solid var(--line);border-radius:20px;padding:18px
+  }
+  .project-title{display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .project-title strong{font-size:1.06rem}
+  .badge{
+    border:1px solid rgba(97,245,113,.35);background:rgba(97,245,113,.07);
+    color:var(--accent);padding:4px 9px;border-radius:999px;font-size:.75rem;font-weight:800
+  }
+
+  .study-links{margin-top:16px;padding:14px 16px;border:1px solid #315948;border-radius:14px;background:rgba(97,245,113,.045)}
+  .study-links>strong{color:var(--accent)}
+  .study-links ul{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:9px}
+  .study-links li{padding-top:8px;border-top:1px solid var(--line)}
+  .study-links small{display:block;color:var(--muted);font-size:.83rem;margin-top:2px}
+  .source-kind{display:inline-block;color:var(--warn);font-size:.76rem;font-weight:750;margin-right:5px}
+  .resource{padding:12px 0;border-bottom:1px solid var(--line)}
+  .resource:last-child{border-bottom:0}
+  .resource strong{display:block}
+  .footer{
+    color:var(--muted);font-size:.9rem;text-align:center;margin-top:34px;padding-top:22px;border-top:1px solid var(--line)
+  }
+  .btn{
+    border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:12px;
+    padding:9px 12px;cursor:pointer;font-weight:700
+  }
+  .btn:hover{border-color:var(--accent)}
+  .progressbar{height:10px;background:#07100d;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .progressbar > div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.2s}
+  .progressline{display:flex;gap:12px;align-items:center;margin-top:16px}
+  .progressline .pct{min-width:54px;font-weight:900;color:var(--accent)}
+  @media(max-width:850px){
+    .g2,.g3,.g4{grid-template-columns:1fr}
+    .track{grid-template-columns:1fr}
+    .phase{position:static}
+    .hero{padding:24px}
+  }
+  @media print{
+    :root{--bg:#fff;--panel:#fff;--panel2:#f7faf8;--text:#111;--muted:#4a5a53;--line:#d8e2dc}
+    body{background:#fff;color:#111}
+    .wrap{max-width:none;padding:0}
+    .hero,.card,.roadmap-box{box-shadow:none}
+    .nav,.btn,.progressline{display:none!important}
+    a{color:#0b6078;text-decoration:none}
+    section{break-inside:avoid}
+    .track{break-inside:avoid}
+    .phase{position:static}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="hero">
+<div class="eyebrow">Ruta pública · 12 meses · revisada el 25/09/2026</div>
+<h1>AI Security Engineering + Agent Security + Secure AI Systems + Cloud Architecture</h1>
+<p class="lead">
+      Norte profesional: convertir tu base actual de AI, backend y AWS en una especialización
+      clara en <strong>seguridad de sistemas de IA y agentes</strong>, sin perder la parte que más te gusta:
+      construir, llevar a producción, reproducir fallos, romper de forma controlada, defender y medir.
+    </p>
+<div class="chips">
+<span class="chip main">Principal: AI Security Engineering</span>
+<span class="chip">LLM Security</span>
+<span class="chip">Agent Security</span>
+<span class="chip">Secure AI Systems</span>
+<span class="chip">Cloud Architecture</span>
+<span class="chip">AWS Security</span>
+<span class="chip">ML/Math como soporte</span>
+</div>
+<div class="progressline">
+<span class="pct" id="pct">0%</span>
+<div class="progressbar" style="flex:1"><div id="bar"></div></div>
+<button class="btn" onclick="resetProgress()">Reiniciar progreso</button>
+</div>
+<nav class="nav">
+<a href="#norte">Norte</a>
+<a href="#rutina">Rutina semanal</a>
+<a href="#roadmap">Roadmap 12 meses</a>
+<a href="#proyectos">Proyectos</a>
+<a href="#30dias">Primeros 30 días</a>
+<a href="#metricas">Métricas</a>
+<a href="#udemy">Mis cursos Udemy</a><a href="#recursos">Recursos</a>
+</nav>
+</header>
+<section id="norte">
+<div class="grid g4">
+<div class="card">
+<div class="metric">45%</div>
+<h3>AI Security</h3>
+<p class="sub">Prompt injection, agent abuse, data leakage, RAG poisoning, tool security, red teaming y evaluación.</p>
+</div>
+<div class="card">
+<div class="metric">25%</div>
+<h3>AI Systems</h3>
+<p class="sub">Agentes, RAG, retrieval, tool calling, evaluación, observabilidad y reliability.</p>
+</div>
+<div class="card">
+<div class="metric">20%</div>
+<h3>Cloud Architecture</h3>
+<p class="sub">IAM, least privilege, KMS, secrets, CloudTrail, serverless, redes y arquitectura segura en AWS.</p>
+</div>
+<div class="card">
+<div class="metric">10%</div>
+<h3>ML + Matemáticas</h3>
+<p class="sub">Álgebra lineal, gradientes, PyTorch y transformers para entender mejor lo que estás asegurando.</p>
+</div>
+</div>
+<div class="callout">
+<strong>Regla central:</strong> no estudiar cuatro carreras separadas. Cada concepto nuevo debe entrar en el mismo ciclo:
+      <strong>construir → atacar en laboratorio → defender → medir → documentar</strong>.
+    </div>
+<div class="grid g2">
+<div class="card soft">
+<h2>Punto de partida</h2>
+<p>Tu trabajo diario incluye APIs, AWS, Angular, NestJS, Python e integración de distintos LLMs. Ya has construido un RAG y empezaste un proyecto con LangGraph. Son proyectos útiles para practicar seguridad, pero no presentaremos RAG ni sistemas de agentes como el centro de tu experiencia laboral actual.</p>
+<p class="sub">
+          Backend seguirá siendo una base técnica importante, pero no será la identidad final del perfil.
+        </p>
+</div>
+<div class="card soft">
+<h2>Perfil objetivo</h2>
+<pre>AI Security Engineer
+├── LLM Security
+├── Agent Security
+├── Secure AI Systems
+├── AI Red Teaming
+└── Cloud / AWS Security Architecture</pre>
+<p class="sub">Evolución posible: Senior AI Security Engineer → Staff/Principal → Secure AI Architect / AI Security Tech Lead.</p>
+</div>
+</div>
+</section>
+<section id="rutina">
+<div class="card">
+<h2>Rutina semanal sugerida</h2>
+<p>Base: <strong>8–10 horas por semana</strong>. Si tienes menos tiempo, conserva las proporciones.</p>
+<table>
+<thead><tr><th>Bloque</th><th>Horas</th><th>Qué hacer</th></tr></thead>
+<tbody>
+<tr><td>Construcción</td><td>3 h</td><td>Agent Security Lab / Secure Tool Gateway / AgentBreak.</td></tr>
+<tr><td>Seguridad práctica</td><td>2 h</td><td>Web/AppSec, IAM, labs controlados, threat modeling.</td></tr>
+<tr><td>Red Team / Evaluación</td><td>2 h</td><td>Diseñar ataques, reproducir fallos, automatizar casos y medir.</td></tr>
+<tr><td>ML + Matemáticas</td><td>1 h</td><td>Álgebra lineal, gradientes, PyTorch, transformers.</td></tr>
+<tr><td>Paper / Write-up</td><td>1–2 h</td><td>Leer, reproducir una idea y dejar notas técnicas públicas o privadas.</td></tr>
+</tbody>
+</table>
+<div class="callout warn">
+<strong>Seguridad responsable:</strong> practica ofensiva únicamente sobre tus propios sistemas,
+        laboratorios diseñados para entrenamiento o entornos para los que tengas autorización explícita.
+      </div>
+</div>
+</section>
+<section id="roadmap">
+<div class="roadmap-box">
+<h2>Roadmap de 12 meses</h2>
+<p class="sub">El objetivo no es “terminar temas”, sino producir evidencia: código, ataques reproducibles, defensas, métricas, diagramas y write-ups.</p>
+<div class="track">
+<div class="phase">
+<div class="num">01</div>
+<strong>Fundamentos AppSec</strong>
+<div class="when">Mes 1</div>
+</div>
+<div>
+<h3>HTTP, autenticación, autorización y vulnerabilidades web</h3>
+<p>Refuerza aquello que después aparece dentro de agentes con herramientas.</p>
+<div class="chips">
+<span class="tag">HTTP</span><span class="tag">Cookies</span><span class="tag">JWT</span>
+<span class="tag">OAuth/OIDC</span><span class="tag">IDOR</span><span class="tag">SSRF</span>
+<span class="tag">SQLi</span><span class="tag">Command Injection</span>
+</div>
+<div class="checklist">
+<label class="check"><input data-id="m1-1" type="checkbox"/><span>Completar labs básicos de acceso, auth, JWT, SSRF y API testing.</span></label>
+<label class="check"><input data-id="m1-2" type="checkbox"/><span>Crear una API vulnerable pequeña y documentar al menos 5 fallos.</span></label>
+<label class="check"><input data-id="m1-3" type="checkbox"/><span>Escribir un threat model simple: assets, trust boundaries, attackers, abuse cases.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Curso + labs</span> <a href="https://portswigger.net/web-security/access-control" rel="noopener noreferrer" target="_blank">PortSwigger · Access control</a><small>Empieza por IDOR y autorización horizontal/vertical.</small></li>
+<li><span class="source-kind">Curso + labs</span> <a href="https://portswigger.net/web-security/jwt" rel="noopener noreferrer" target="_blank">PortSwigger · JWT</a><small>Continúa con autenticación y validación de tokens.</small></li>
+<li><span class="source-kind">Curso + labs</span> <a href="https://portswigger.net/web-security/oauth" rel="noopener noreferrer" target="_blank">PortSwigger · OAuth 2.0</a><small>Estudia flujos y fallos de implementación.</small></li>
+<li><span class="source-kind">Curso + labs</span> <a href="https://portswigger.net/web-security/ssrf" rel="noopener noreferrer" target="_blank">PortSwigger · SSRF</a><small>Practica el alcance de peticiones desde el servidor.</small></li>
+<li><span class="source-kind">Guía</span> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Threat_Modeling_Cheat_Sheet.html" rel="noopener noreferrer" target="_blank">OWASP · Threat Modeling Cheat Sheet</a><small>Dibuja actores, activos y límites de confianza del lab.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">02</div>
+<strong>AWS Security Core</strong>
+<div class="when">Mes 2</div>
+</div>
+<div>
+<h3>IAM y arquitectura segura como fundamento</h3>
+<p>Aprende a diseñar el sistema para que un LLM comprometido no equivalga a una cuenta AWS comprometida.</p>
+<ul class="clean">
+<li>IAM users/roles/policies, trust policies, STS y resource policies.</li>
+<li>Least privilege, separation of duties, KMS, Secrets Manager y CloudTrail.</li>
+<li>API Gateway, Lambda permissions, S3 policies, VPC y security groups.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m2-1" type="checkbox"/><span>Crear dos roles de agente con permisos distintos y demostrar que uno no puede acceder al recurso del otro.</span></label>
+<label class="check"><input data-id="m2-2" type="checkbox"/><span>Usar IAM Access Analyzer para revisar permisos excesivos.</span></label>
+<label class="check"><input data-id="m2-3" type="checkbox"/><span>Diagramar trust boundaries de una arquitectura agentic en AWS.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Curso gratis</span> <a href="https://aws.amazon.com/training/learn-about/security/" rel="noopener noreferrer" target="_blank">AWS · Security Learning Plan</a><small>Selecciona IAM e identidad; evita repetir la introducción general a cloud.</small></li>
+<li><span class="source-kind">Documentación</span> <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_evaluation-logic_policy-eval-denyallow.html" rel="noopener noreferrer" target="_blank">IAM · Evaluación de políticas</a><small>Aprende qué permite o deniega una solicitud.</small></li>
+<li><span class="source-kind">Práctica</span> <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_testing-policies.html" rel="noopener noreferrer" target="_blank">IAM · Policy Simulator</a><small>Comprueba tus roles con acciones y recursos concretos.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">03</div>
+<strong>LLM Security</strong>
+<div class="when">Mes 3</div>
+</div>
+<div>
+<h3>Riesgos específicos de aplicaciones LLM</h3>
+<ul class="clean">
+<li>Prompt injection directa e indirecta.</li>
+<li>Sensitive information disclosure.</li>
+<li>Improper output handling y excessive agency.</li>
+<li>Supply chain, data/model poisoning y unbounded consumption.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m3-1" type="checkbox"/><span>Construir Agent Security Lab v1 con datos public/internal/secret.</span></label>
+<label class="check"><input data-id="m3-2" type="checkbox"/><span>Crear un dataset de al menos 50 prompts adversariales propios.</span></label>
+<label class="check"><input data-id="m3-3" type="checkbox"/><span>Medir tasa de fuga de información y falsos rechazos.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Guía</span> <a href="https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/" rel="noopener noreferrer" target="_blank">OWASP · Top 10 LLM/GenAI 2026</a><small>Revisa escenarios y mitigaciones; prioriza prompt injection y fuga de datos.</small></li>
+<li><span class="source-kind">Curso + labs</span> <a href="https://portswigger.net/web-security/learning-paths/llm-attacks" rel="noopener noreferrer" target="_blank">PortSwigger · Web LLM attacks</a><small>Haz los labs de explotación de APIs de un agente.</small></li>
+<li><span class="source-kind">Marco</span> <a href="https://atlas.mitre.org/" rel="noopener noreferrer" target="_blank">MITRE ATLAS</a><small>Clasifica las técnicas que logres reproducir.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">04</div>
+<strong>Agent Security</strong>
+<div class="when">Mes 4</div>
+</div>
+<div>
+<h3>Herramientas, memoria, RAG y agencia</h3>
+<p>Pasa de “proteger el prompt” a proteger las capacidades reales del agente.</p>
+<ul class="clean">
+<li>Tool misuse / tool abuse.</li>
+<li>Indirect prompt injection desde documentos.</li>
+<li>RAG poisoning, memory poisoning y context manipulation.</li>
+<li>Excessive permissions, delegation y confused deputy.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m4-1" type="checkbox"/><span>Subir documentos maliciosos controlados al RAG y reproducir indirect prompt injection.</span></label>
+<label class="check"><input data-id="m4-2" type="checkbox"/><span>Separar decisión del LLM de autorización real del sistema.</span></label>
+<label class="check"><input data-id="m4-3" type="checkbox"/><span>Aplicar deny-by-default en tools sensibles.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Guía</span> <a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" rel="noopener noreferrer" target="_blank">OWASP · Top 10 Agentic Applications</a><small>Relaciona amenazas con memoria, delegación, herramientas y permisos.</small></li>
+<li><span class="source-kind">Lab</span> <a href="https://portswigger.net/web-security/llm-attacks/lab-indirect-prompt-injection" rel="noopener noreferrer" target="_blank">PortSwigger · Indirect prompt injection</a><small>Replica el patrón en tus documentos de prueba.</small></li>
+<li><span class="source-kind">Guía AWS</span> <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/agentic-ai-security/best-practices.html" rel="noopener noreferrer" target="_blank">Seguridad para sistemas agentic</a><small>Observa cómo se combinan capas de aplicación, identidad e infraestructura.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">05</div>
+<strong>Secure AI Design</strong>
+<div class="when">Mes 5</div>
+</div>
+<div>
+<h3>Policy Enforcement Layer y secure-by-design</h3>
+<pre>LLM
+ │  solicita acción
+ ▼
+Policy / Authorization Gateway
+ ├─ identidad del usuario
+ ├─ identidad del agente
+ ├─ tool permitida
+ ├─ recurso permitido
+ └─ acción permitida
+       │
+     ALLOW / DENY</pre>
+<div class="checklist">
+<label class="check"><input data-id="m5-1" type="checkbox"/><span>Implementar un Tool Gateway que valide autorización fuera del LLM.</span></label>
+<label class="check"><input data-id="m5-2" type="checkbox"/><span>Agregar schema validation, allowlists y límites de parámetros.</span></label>
+<label class="check"><input data-id="m5-3" type="checkbox"/><span>Crear pruebas que demuestren que un jailbreak no rompe la autorización.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Guía AWS</span> <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/agentic-ai-frameworks/security-best-practices-for-tool-integration.html" rel="noopener noreferrer" target="_blank">Tool integration · Authentication and authorization</a><small>Diseña controles antes de invocar cada herramienta.</small></li>
+<li><span class="source-kind">Estándar</span> <a href="https://owasp.org/projects/artificial-intelligence-security-verification-standard-aisvs-docs" rel="noopener noreferrer" target="_blank">OWASP · AI Security Verification Standard</a><small>Transforma riesgos en verificaciones concretas.</small></li>
+<li><span class="source-kind">Guía</span> <a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html" rel="noopener noreferrer" target="_blank">OWASP · Authorization Cheat Sheet</a><small>Aplica denegación por defecto y verifica permisos por recurso.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">06</div>
+<strong>Cloud Architecture</strong>
+<div class="when">Mes 6</div>
+</div>
+<div>
+<h3>Agent Security Lab v2 en AWS</h3>
+<p>Integra seguridad de aplicación, IAM, datos, auditoría y observabilidad.</p>
+<div class="chips">
+<span class="tag">API Gateway</span><span class="tag">Lambda</span><span class="tag">Bedrock</span>
+<span class="tag">S3</span><span class="tag">KMS</span><span class="tag">CloudTrail</span>
+<span class="tag">CloudWatch</span><span class="tag">Terraform</span>
+</div>
+<div class="checklist">
+<label class="check"><input data-id="m6-1" type="checkbox"/><span>Desplegar el laboratorio con Terraform.</span></label>
+<label class="check"><input data-id="m6-2" type="checkbox"/><span>Aplicar least privilege y separar roles por tool/capacidad.</span></label>
+<label class="check"><input data-id="m6-3" type="checkbox"/><span>Agregar auditoría de cada tool call con identidad, recurso, decisión y resultado.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Arquitectura</span> <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/security-reference-architecture-generative-ai/" rel="noopener noreferrer" target="_blank">AWS · SRA para seguridad de IA</a><small>Usa los controles como lista de revisión arquitectónica.</small></li>
+<li><span class="source-kind">Tutorial</span> <a href="https://developer.hashicorp.com/terraform/tutorials/aws-get-started" rel="noopener noreferrer" target="_blank">HashiCorp · Terraform en AWS</a><small>Adapta el ejemplo al laboratorio; destruye recursos después de probar.</small></li>
+<li><span class="source-kind">Guía</span> <a href="https://docs.aws.amazon.com/wellarchitected/latest/serverless-applications-lens/identity-and-access-management.html" rel="noopener noreferrer" target="_blank">AWS · Serverless Applications Lens</a><small>Revisa fronteras de seguridad para API Gateway y Lambda.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">07</div>
+<strong>AI Red Teaming</strong>
+<div class="when">Mes 7</div>
+</div>
+<div>
+<h3>De pruebas manuales a ataques automatizados</h3>
+<ul class="clean">
+<li>Attack taxonomy.</li>
+<li>Payload generation controlada.</li>
+<li>Attack Success Rate (ASR).</li>
+<li>Data leakage, tool abuse y policy violation rate.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m7-1" type="checkbox"/><span>Ejecutar 500+ casos adversariales de forma reproducible.</span></label>
+<label class="check"><input data-id="m7-2" type="checkbox"/><span>Guardar entradas, salidas, tool calls, decisión y etiqueta esperada.</span></label>
+<label class="check"><input data-id="m7-3" type="checkbox"/><span>Crear un informe con severidad y evidencia reproducible.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Guía</span> <a href="https://genai.owasp.org/resource/genai-red-teaming-guide/" rel="noopener noreferrer" target="_blank">OWASP · GenAI Red Teaming Guide (2025)</a><small>Define alcance, hipótesis, evidencias y reporte.</small></li>
+<li><span class="source-kind">Herramienta</span> <a href="https://www.promptfoo.dev/docs/red-team/quickstart/" rel="noopener noreferrer" target="_blank">Promptfoo · Red team quickstart</a><small>Compara tu runner con una implementación abierta; inferencia puede costar.</small></li>
+<li><span class="source-kind">Herramienta</span> <a href="https://github.com/NVIDIA/garak" rel="noopener noreferrer" target="_blank">NVIDIA garak · repositorio</a><small>Explora pruebas y detectores, y valida sus resultados manualmente.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">08</div>
+<strong>Detection &amp; Reliability</strong>
+<div class="when">Mes 8</div>
+</div>
+<div>
+<h3>Observabilidad, detección e incident response</h3>
+<ul class="clean">
+<li>Tracing de agente y tools.</li>
+<li>Detección de comportamientos anómalos.</li>
+<li>Rate limiting / budgets / kill switches.</li>
+<li>Runbooks para incidentes de AI.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m8-1" type="checkbox"/><span>Crear alertas para tool abuse y accesos denegados repetitivos.</span></label>
+<label class="check"><input data-id="m8-2" type="checkbox"/><span>Diseñar un kill switch para herramientas de alto impacto.</span></label>
+<label class="check"><input data-id="m8-3" type="checkbox"/><span>Simular un incidente y escribir el postmortem.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Documentación</span> <a href="https://opentelemetry.io/docs/concepts/signals/" rel="noopener noreferrer" target="_blank">OpenTelemetry · trazas, métricas y logs</a><small>Correlaciona solicitud, decisión y llamadas de herramientas.</small></li>
+<li><span class="source-kind">Guía</span> <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/agentic-ai-security/best-practices.html" rel="noopener noreferrer" target="_blank">AWS · seguridad de sistemas agentic</a><small>Revisa monitorización y respuesta a incidentes.</small></li>
+<li><span class="source-kind">Marco</span> <a href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener noreferrer" target="_blank">NIST · AI RMF</a><small>Convierte hallazgos técnicos en riesgos que puedas comunicar.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">09</div>
+<strong>ML Internals</strong>
+<div class="when">Mes 9</div>
+</div>
+<div>
+<h3>Matemáticas y PyTorch como apoyo</h3>
+<p>No para cambiar de rumbo, sino para comprender mejor modelos y ataques.</p>
+<ul class="clean">
+<li>Vectores, matrices, producto punto, normas y cosine similarity.</li>
+<li>Derivadas, gradientes, chain rule, gradient descent y backprop.</li>
+<li>Embeddings, attention y transformer básico.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m9-1" type="checkbox"/><span>Implementar una red pequeña en PyTorch y entrenarla.</span></label>
+<label class="check"><input data-id="m9-2" type="checkbox"/><span>Explicar con tus palabras qué representa QKᵀ en attention.</span></label>
+<label class="check"><input data-id="m9-3" type="checkbox"/><span>Implementar cosine similarity y un mini retriever sin framework.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Curso en video</span> <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" rel="noopener noreferrer" target="_blank">3Blue1Brown · Essence of Linear Algebra</a><small>Concéntrate en vectores, matrices y producto punto.</small></li>
+<li><span class="source-kind">Curso en video</span> <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5Yr" rel="noopener noreferrer" target="_blank">3Blue1Brown · Essence of Calculus</a><small>Refuerza derivadas y regla de la cadena.</small></li>
+<li><span class="source-kind">Curso práctico</span> <a href="https://docs.pytorch.org/tutorials/beginner/basics/" rel="noopener noreferrer" target="_blank">PyTorch · Learn the Basics</a><small>Entrena una red pequeña y examina autograd.</small></li>
+<li><span class="source-kind">Curso gratis, español</span> <a href="https://huggingface.co/learn/llm-course/es/chapter1/1" rel="noopener noreferrer" target="_blank">Hugging Face · LLM Course</a><small>Conecta embeddings y transformers con tus sistemas.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">10</div>
+<strong>Adversarial ML</strong>
+<div class="when">Mes 10</div>
+</div>
+<div>
+<h3>Exploración: seguridad más cerca del modelo</h3>
+<p>Prueba si esta capa te engancha lo suficiente para convertirla en una tercera especialización.</p>
+<ul class="clean">
+<li>Adversarial examples.</li>
+<li>Data poisoning.</li>
+<li>Model extraction.</li>
+<li>Membership inference / privacy.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m10-1" type="checkbox"/><span>Reproducir un experimento sencillo de un paper en un entorno controlado.</span></label>
+<label class="check"><input data-id="m10-2" type="checkbox"/><span>Escribir qué parte te gustó: matemática, ataque, defensa o experimentación.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Tutorial</span> <a href="https://docs.pytorch.org/tutorials/beginner/fgsm_tutorial.html" rel="noopener noreferrer" target="_blank">PyTorch · adversarial examples con FGSM</a><small>Reproduce el experimento y documenta supuestos.</small></li>
+<li><span class="source-kind">Marco</span> <a href="https://atlas.mitre.org/" rel="noopener noreferrer" target="_blank">MITRE ATLAS</a><small>Compara las técnicas contra el modelo y contra la aplicación.</small></li>
+<li><span class="source-kind">Curso gratis</span> <a href="https://course.fast.ai/" rel="noopener noreferrer" target="_blank">fast.ai · Practical Deep Learning for Coders (2022)</a><small>Úsalo si quieres profundizar más después del experimento.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">11</div>
+<strong>Capstone</strong>
+<div class="when">Mes 11</div>
+</div>
+<div>
+<h3>AgentBreak — plataforma de evaluación y red teaming</h3>
+<pre>Attack Dataset / Generator
+          │
+          ▼
+     Attack Runner
+          │
+          ▼
+      Target Agent
+          │
+   ┌──────┼────────┐
+   ▼      ▼        ▼
+  RAG    Tools    Memory
+          │
+          ▼
+   Policy Gateway
+          │
+          ▼
+ Evaluator + Metrics
+          │
+          ▼
+ Security Report</pre>
+<div class="checklist">
+<label class="check"><input data-id="m11-1" type="checkbox"/><span>Soportar al menos 4 clases de ataque.</span></label>
+<label class="check"><input data-id="m11-2" type="checkbox"/><span>Generar reporte reproducible con métricas, evidencia y severidad.</span></label>
+<label class="check"><input data-id="m11-3" type="checkbox"/><span>Desplegar una arquitectura segura de referencia en AWS.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Guía práctica</span> <a href="https://www.promptfoo.dev/docs/red-team/agents/" rel="noopener noreferrer" target="_blank">Promptfoo · red teaming de agentes</a><small>Inspírate en escenarios de herramientas y flujos agentic.</small></li>
+<li><span class="source-kind">Guía</span> <a href="https://owasp.org/projects/ai-testing-guide" rel="noopener noreferrer" target="_blank">OWASP · AI Testing Guide</a><small>Organiza evidencias y resultados reproducibles.</small></li>
+<li><span class="source-kind">Guía</span> <a href="https://genai.owasp.org/resource/genai-red-teaming-guide/" rel="noopener noreferrer" target="_blank">OWASP · GenAI Red Teaming Guide (2025)</a><small>Estructura el informe del proyecto final.</small></li>
+</ul></div>
+</div>
+</div>
+<div class="track">
+<div class="phase">
+<div class="num">12</div>
+<strong>Prueba pública</strong>
+<div class="when">Mes 12</div>
+</div>
+<div>
+<h3>Convertir aprendizaje en evidencia profesional</h3>
+<ul class="clean">
+<li>README serio con threat model y arquitectura.</li>
+<li>Write-up técnico de un hallazgo o metodología.</li>
+<li>Demo reproducible.</li>
+<li>Charla, meetup, blog o video técnico.</li>
+</ul>
+<div class="checklist">
+<label class="check"><input data-id="m12-1" type="checkbox"/><span>Publicar 1 artículo técnico profundo.</span></label>
+<label class="check"><input data-id="m12-2" type="checkbox"/><span>Publicar arquitectura y threat model del capstone.</span></label>
+<label class="check"><input data-id="m12-3" type="checkbox"/><span>Actualizar CV/LinkedIn solo con skills que ya puedas demostrar.</span></label>
+</div>
+<div class="study-links"><strong>Recursos para este mes</strong><ul>
+<li><span class="source-kind">Guía</span> <a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax" rel="noopener noreferrer" target="_blank">GitHub Docs · escribir un README</a><small>Publica arquitectura, instrucciones y evidencia sin datos reales.</small></li>
+<li><span class="source-kind">Marco</span> <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence" rel="noopener noreferrer" target="_blank">NIST · AI 600-1 GenAI Profile (2024)</a><small>Conecta tu evaluación con gestión de riesgos.</small></li>
+<li><span class="source-kind">Catálogo</span> <a href="https://atlas.mitre.org/" rel="noopener noreferrer" target="_blank">MITRE ATLAS</a><small>Etiqueta técnicas, mitigaciones y limitaciones en el write-up.</small></li>
+</ul></div>
+</div>
+</div>
+</div>
+</section>
+<section id="proyectos">
+<h2>Los 3 proyectos que deben verte crecer</h2>
+<div class="grid g3">
+<div class="card">
+<div class="project-title"><strong>1. Agent Security Lab</strong><span class="badge">Mes 1–4</span></div>
+<p>Agente deliberadamente vulnerable con datos public/internal/secret, RAG, tools y ataques controlados.</p>
+<p class="sub"><strong>Demuestra:</strong> prompt injection, RAG poisoning, data leakage, authz y mitigaciones.</p>
+</div>
+<div class="card">
+<div class="project-title"><strong>2. Secure Tool Gateway</strong><span class="badge">Mes 5–8</span></div>
+<p>Capa externa al LLM que decide si una tool call puede ejecutarse según identidad, recurso, acción y contexto.</p>
+<p class="sub"><strong>Demuestra:</strong> secure-by-design, least privilege, IAM y policy enforcement.</p>
+</div>
+<div class="card">
+<div class="project-title"><strong>3. AgentBreak</strong><span class="badge">Mes 7–12</span></div>
+<p>Runner para lanzar ataques reproducibles contra agentes y medir seguridad/robustez.</p>
+<p class="sub"><strong>Demuestra:</strong> red teaming, evals, métricas, investigación y reporting.</p>
+</div>
+</div>
+</section>
+<section id="30dias">
+<div class="card">
+<h2>Primeros 30 días — empieza por aquí</h2>
+<div class="grid g2">
+<div>
+<h3>Semana 1 · preparar laboratorio</h3>
+<div class="checklist">
+<label class="check"><input data-id="d1" type="checkbox"/><span>Crear repo <code>agent-security-lab</code>.</span></label>
+<label class="check"><input data-id="d2" type="checkbox"/><span>Crear API mínima con auth y 3 niveles de información: public/internal/secret.</span></label>
+<label class="check"><input data-id="d3" type="checkbox"/><span>Conectar un agente con una sola tool de lectura.</span></label>
+<label class="check"><input data-id="d4" type="checkbox"/><span>Documentar assets y trust boundaries.</span></label>
+</div>
+<h3 style="margin-top:18px">Semana 2 · romper la capa web</h3>
+<div class="checklist">
+<label class="check"><input data-id="d5" type="checkbox"/><span>Practicar access control, JWT/OAuth, SSRF y API testing en labs legales.</span></label>
+<label class="check"><input data-id="d6" type="checkbox"/><span>Introducir una vulnerabilidad de autorización en tu lab y luego corregirla.</span></label>
+</div>
+</div>
+<div>
+<h3>Semana 3 · romper el agente</h3>
+<div class="checklist">
+<label class="check"><input data-id="d7" type="checkbox"/><span>Crear 20 intentos de prompt injection directos.</span></label>
+<label class="check"><input data-id="d8" type="checkbox"/><span>Crear 10 documentos controlados con indirect prompt injection.</span></label>
+<label class="check"><input data-id="d9" type="checkbox"/><span>Registrar qué ataques provocan tool calls o fuga de datos.</span></label>
+</div>
+<h3 style="margin-top:18px">Semana 4 · defender y medir</h3>
+<div class="checklist">
+<label class="check"><input data-id="d10" type="checkbox"/><span>Implementar autorización fuera del LLM.</span></label>
+<label class="check"><input data-id="d11" type="checkbox"/><span>Volver a ejecutar exactamente los mismos ataques.</span></label>
+<label class="check"><input data-id="d12" type="checkbox"/><span>Publicar/guardar un informe: antes vs después, ASR, leakage y falsos rechazos.</span></label>
+</div>
+</div>
+</div>
+<div class="callout info">
+<strong>Tu objetivo del primer mes no es “aprender ciberseguridad”.</strong>
+        Es terminar con un sistema real que puedas enseñar y decir:
+        “esta vulnerabilidad existía, la reproduje, diseñé esta defensa y medí el resultado”.
+      </div>
+</div>
+</section>
+<section id="metricas">
+<div class="card">
+<h2>Métricas que aprenderás a usar</h2>
+<table>
+<thead><tr><th>Métrica</th><th>Qué pregunta responde</th></tr></thead>
+<tbody>
+<tr><td><strong>Attack Success Rate (ASR)</strong></td><td>¿Qué porcentaje de ataques consigue el objetivo adversarial definido?</td></tr>
+<tr><td><strong>Sensitive Data Leakage Rate</strong></td><td>¿Con qué frecuencia aparece información que la política prohíbe revelar?</td></tr>
+<tr><td><strong>Tool Policy Violation Rate</strong></td><td>¿Cuántas acciones intentan o consiguen salir de los permisos previstos?</td></tr>
+<tr><td><strong>False Refusal Rate</strong></td><td>¿La defensa bloquea demasiadas solicitudes legítimas?</td></tr>
+<tr><td><strong>Detection Rate</strong></td><td>¿Cuántos ataques o comportamientos anómalos detecta el sistema?</td></tr>
+<tr><td><strong>Mean Time to Reproduce</strong></td><td>¿Qué tan rápido puedes convertir un fallo extraño en un caso determinista?</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+<section>
+<div class="grid g2">
+<div class="card">
+<h2>Lo que NO priorizarás este año</h2>
+<ul class="clean">
+<li>Frontend avanzado por obligación.</li>
+<li>Otro framework backend solo para ampliar la lista.</li>
+<li>Data Engineering profundo salvo necesidad del proyecto.</li>
+<li>Certificaciones sin laboratorio o evidencia.</li>
+<li>Aprender 10 frameworks de agentes a la vez.</li>
+<li>Seguridad ofensiva contra sistemas no autorizados.</li>
+</ul>
+</div>
+<div class="card">
+<h2>Señales de que el roadmap funciona</h2>
+<ul class="clean">
+<li>Puedes explicar por qué un ataque funcionó, no solo copiarlo.</li>
+<li>Tus defensas viven fuera del prompt cuando corresponde.</li>
+<li>Tus IAM policies son mínimas y justificables.</li>
+<li>Tus ataques son reproducibles y medibles.</li>
+<li>Produces threat models y diagramas claros.</li>
+<li>Lees papers y puedes reproducir al menos parte del método.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="udemy"><div class="card">
+<h2>Cursos seleccionados para la ruta</h2>
+<p>Selección por relevancia para AI Security Engineering. Los cursos acompañan el proyecto de cada etapa. Revisa el temario antes de empezar.</p>
+<table><thead><tr><th>Etapa</th><th>Curso propio</th><th>Uso concreto / decisión</th></tr></thead><tbody>
+<tr><td>Mes 1 · AppSec</td><td>OWASP API Security Top 10 2021/2023/2025 with Java Examples · Andrii Piatakha</td><td>Referencia opcional sobre riesgos de API; traslada los ejemplos a NestJS/Python. Los labs de PortSwigger siguen siendo la práctica principal.</td></tr>
+<tr><td>Meses 1–2 · base web</td><td>Secure Python &amp; Django: Build Hack-Proof Web Applications · Meta Brains</td><td>Usa únicamente los módulos de autenticación, validación y errores que apliquen a tu API. Django no es un requisito de la ruta.</td></tr>
+<tr><td>Mes 2 · AWS</td><td>Curso Básico de Terraform y AWS para DevOps</td><td>Estudiar módulos pertinentes a IAM, policies y despliegue reproducible si están incluidos. Complementa con documentación oficial AWS.</td></tr>
+<tr><td>Mes 3 · LLM</td><td>Generative AI Engineering with OpenAI, Anthropic · Data Science Academy, School of AI</td><td>Selecciona secciones de integración y evaluación para construir el sistema de prueba; no necesitas completar el curso entero.</td></tr>
+<tr><td>Mes 4 · agentes</td><td>Curso Completo: LangChain, LangGraph y Agentes IA con Python · Santiago Hernández</td><td>Revisar secciones de tools, estado y flujos para el agente de laboratorio.</td></tr>
+<tr><td>Mes 4 · RAG</td><td>MongoDB for AI Engineers: RAG, Vector DB, Agents &amp; LLM Apps · Creative Online School</td><td>Solo si necesitas un almacén vectorial para probar contaminación de documentos y aislamiento de datos. Puedes reutilizar tu demo RAG.</td></tr>
+<tr><td>Mes 5 · integraciones</td><td>Building AI Integrations with Model Context Protocol (MCP) · Anton Voroniuk y otros</td><td>Opcional para explorar permisos de herramientas y límites de confianza; revisa primero los fundamentos de autorización.</td></tr>
+<tr><td>Meses 6–8 · producción</td><td>Serverless Framework Bootcamp: Node.js, AWS &amp; Microservices · Ariel Weinberger</td><td>Consulta solo los módulos de despliegue, identidad y operación que te falten; AWS Lambda ya forma parte de tu experiencia.</td></tr>
+</tbody></table>
+<div class="callout info"><strong>Orden real de estudio:</strong> PortSwigger y OWASP (mes 1) → IAM de AWS (mes 2) → OWASP LLM y labs (mes 3) → curso LangGraph + OWASP Agentic (mes 4) → políticas fuera del LLM (mes 5). Un curso acompaña al proyecto; el entregable del mes determina qué capítulos mirar.</div>
+<p><strong>En pausa:</strong> certificaciones Cloud Practitioner repetidas, cursos completos de Java/Spring/Flutter/WordPress, Wi-Fi/Metasploit/OSINT genérico, varios bootcamps full stack y cursos titulados “AI and Cyber Security Expert Exam”. Su presencia en tu biblioteca no implica que debas completarlos. Si luego aparece una vacante concreta, reevalúa esta selección.</p>
+<p><strong>Medida de avance:</strong> usa los checkboxes de esta página para registrar tus entregables. Al cerrar cada mes, registra una prueba ejecutable, una defensa, resultados y un breve informe; no cuentes horas de video como evidencia profesional.</p>
+</div></section><section id="recursos">
+<div class="card">
+<h2>Guías, cursos y laboratorios</h2>
+<p>Ediciones principales verificadas en fuentes oficiales el 24 de septiembre de 2026. <strong>La fecha de revisión no es la fecha de publicación:</strong> conviven ediciones 2026, documentos anteriores que siguen siendo útiles y documentación que se actualiza continuamente. Empieza por los enlaces dentro del mes que estés cursando. PortSwigger y las guías públicas son gratuitos; algunos cursos requieren cuenta. Los despliegues en AWS, el uso de modelos y ciertos laboratorios guiados pueden generar cargos. Revisa precios y presupuesto antes de ejecutarlos.</p>
+<div class="callout info"><strong>Fechas clave:</strong> OWASP LLM Top 10 edición 2026 (publicada en agosto de 2026); OWASP Agentic Top 10 edición 2026 (publicada en diciembre de 2025); OWASP GenAI Red Teaming Guide (enero de 2025); NIST GenAI Profile AI 600-1 (julio de 2024); fast.ai Practical Deep Learning parte 1 (2022). PortSwigger, AWS y PyTorch ofrecen documentación y cursos en línea; revisa la página del recurso cuando llegues a cada etapa. “Edición 2026” no garantiza que cada ejemplo o herramienta sea nuevo de 2026.</div>
+<div class="callout info"><strong>Ruta de arranque (primeras 2 semanas):</strong>
+        1) access control y JWT en PortSwigger; 2) threat model de tu agente; 3) IAM policy evaluation; 4) reproduce una fuga en tu propio laboratorio y documenta la defensa.
+      </div>
+<div class="resource">
+<strong>OWASP GenAI Security Project — LLM Top 10 (2026)</strong>
+<span class="sub">Mapa base de riesgos para aplicaciones LLM.</span><br/>
+<a href="https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/" rel="noopener" target="_blank">Guía OWASP LLM 2026</a>
+</div>
+<div class="resource">
+<strong>OWASP Top 10 for Agentic Applications</strong>
+<span class="sub">Guía enfocada a riesgos de sistemas agentic.</span><br/>
+<a href="https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/" rel="noopener noreferrer" target="_blank">Guía OWASP Agentic Applications</a>
+</div>
+<div class="resource">
+<strong>PortSwigger Web Security Academy</strong>
+<span class="sub">Labs interactivos de acceso, JWT, OAuth, SSRF, APIs y Web LLM attacks.</span><br/>
+<a href="https://portswigger.net/web-security" rel="noopener" target="_blank">portswigger.net/web-security</a>
+</div>
+<div class="resource">
+<strong>OWASP Juice Shop</strong>
+<span class="sub">Aplicación vulnerable intencional para practicar AppSec de forma controlada.</span><br/>
+<a href="https://owasp.org/projects/juice-shop" rel="noopener" target="_blank">owasp.org/projects/juice-shop</a>
+</div>
+<div class="resource">
+<strong>AWS Well-Architected — Security Pillar</strong>
+<span class="sub">Identity, traceability, infrastructure protection, data protection, incident response y AppSec.</span><br/>
+<a href="https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html" rel="noopener" target="_blank">AWS Security Pillar</a>
+</div>
+<div class="resource">
+<strong>AWS IAM Access Analyzer</strong>
+<span class="sub">Úsalo para revisar acceso externo/interno, permisos no usados y validar/refinar policies.</span><br/>
+<a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html" rel="noopener" target="_blank">IAM Access Analyzer</a>
+</div>
+<div class="resource">
+<strong>Amazon Bedrock Guardrails</strong>
+<span class="sub">Útil para aprender controles del proveedor, pero siempre compáralos con controles de autorización fuera del modelo.</span><br/>
+<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html" rel="noopener" target="_blank">Bedrock Guardrails</a>
+</div>
+<div class="resource">
+<strong>NIST AI RMF (2023) + Generative AI Profile (2024)</strong>
+<span class="sub">Marco para pasar de “vulnerabilidades” a gestión de riesgos de sistemas de IA.</span><br/>
+<a href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener" target="_blank">NIST AI RMF</a>
+</div>
+</div>
+</section>
+<section>
+<div class="card soft">
+<h2>Regla de reposicionamiento profesional</h2>
+<p>
+        No cambies todavía tu título a <strong>AI Security Engineer</strong> solo por estudiar.
+        Hazlo cuando puedas demostrar al menos:
+      </p>
+<div class="grid g3">
+<div><strong>1.</strong> Un agente vulnerable + mitigado.</div>
+<div><strong>2.</strong> Una arquitectura AWS segura y documentada.</div>
+<div><strong>3.</strong> Un benchmark/red-team runner reproducible.</div>
+</div>
+<p class="sub" style="margin-top:14px">
+        Hasta entonces, tu posición natural sigue siendo AI Engineer / AI Systems con una especialización creciente en seguridad.
+      </p>
+</div>
+</section>
+<div class="footer">
+    Roadmap personalizado para Miguel · enfoque: construir, romper de forma autorizada, defender, medir y publicar.<br/>
+    Este archivo guarda el progreso de los checkboxes localmente en tu navegador.
+  </div>
+</div>
+<script>
+(function(){
+  const boxes = [...document.querySelectorAll('input[type="checkbox"][data-id]')];
+  const KEY = 'miguel-ai-security-roadmap-v1';
+
+  function load(){
+    let state = {};
+    try{ state = JSON.parse(localStorage.getItem(KEY) || '{}'); }catch(e){}
+    boxes.forEach(b => b.checked = !!state[b.dataset.id]);
+    update();
+  }
+  function save(){
+    const state = {};
+    boxes.forEach(b => state[b.dataset.id] = b.checked);
+    localStorage.setItem(KEY, JSON.stringify(state));
+    update();
+  }
+  function update(){
+    const done = boxes.filter(b => b.checked).length;
+    const pct = boxes.length ? Math.round(done * 100 / boxes.length) : 0;
+    document.getElementById('pct').textContent = pct + '%';
+    document.getElementById('bar').style.width = pct + '%';
+  }
+  boxes.forEach(b => b.addEventListener('change', save));
+  window.resetProgress = function(){
+    if(confirm('¿Reiniciar todos los checkboxes del roadmap?')){
+      localStorage.removeItem(KEY);
+      boxes.forEach(b => b.checked = false);
+      update();
+    }
+  };
+  load();
+})();
+</script>
+</body>
+</html>
