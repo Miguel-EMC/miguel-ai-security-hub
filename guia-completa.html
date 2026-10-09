@@ -174,7 +174,7 @@
 <body>
 <div class="wrap">
 <header class="hero">
-<div class="eyebrow">Ruta pública · 12 meses · revisada el 25/09/2026</div>
+<div class="eyebrow">Ruta pública · 12 meses · revisada el 09/10/2026</div>
 <h1>AI Security Engineering + Agent Security + Secure AI Systems + Cloud Architecture</h1>
 <p class="lead">
       Norte profesional: convertir tu base actual de AI, backend y AWS en una especialización
@@ -196,7 +196,7 @@
 <button class="btn" onclick="resetProgress()">Reiniciar progreso</button>
 </div>
 <nav class="nav">
-<a href="#norte">Norte</a>
+<a href="#prioridades">Prioridades actuales</a><a href="#norte">Norte</a>
 <a href="#rutina">Rutina semanal</a>
 <a href="#roadmap">Roadmap 12 meses</a>
 <a href="#proyectos">Proyectos</a>
@@ -205,6 +205,32 @@
 <a href="#udemy">Mis cursos Udemy</a><a href="#recursos">Recursos</a>
 </nav>
 </header>
+<section id="prioridades"><div class="card"><h2>Prioridades actuales · ingeniería de sistemas de IA</h2><p>Actualización del 9 de octubre de 2026. Este bloque sustituye el orden anterior de los primeros 30 días y adelanta fundamentos de agentes, evaluación y seguridad. Al terminar, continúa la ruta de 12 meses desde los contenidos pendientes; no reinicies lo ya completado.</p><div class="callout info"><strong>Enfoque:</strong> profundizar en decisiones de diseño, programación, evaluación y seguridad. El conocimiento de autorización por recurso (IDOR) es una base para extender controles a agentes y herramientas. La práctica de CI/CD se mantiene como soporte transversal.</div><p><strong>Dedicación:</strong> 8–10 horas semanales: 3 h de conceptos y ejemplos, 4 h de laboratorio, 1–2 h de evaluación y documentación y 1 h de explicación oral. Matemáticas y temas exploratorios pasan temporalmente a segundo plano; mantén backend y AWS como base.</p>
+<div class="card soft"><h3>Semana 1 · patrones de agentes y orquestación</h3><p>Distinguir un workflow fijo de un agente; estudiar chaining, routing, parallelization, orchestrator-worker y evaluator-optimizer.</p><div class="checklist">
+<label class="check"><input data-id="acid-pat-1" type="checkbox"/><span>Dibujar cinco patrones y explicar cuándo usar cada uno; no todo problema necesita varios agentes.</span></label>
+<label class="check"><input data-id="acid-pat-2" type="checkbox"/><span>Implementar un flujo fijo y un orchestrator-worker en el mismo laboratorio con estado tipado, workers y agregación de resultados.</span></label>
+<label class="check"><input data-id="acid-pat-3" type="checkbox"/><span>Añadir límite de pasos, timeout, manejo de fallos y una condición de terminación; explicar decisiones en cinco minutos.</span></label>
+</div><p class="sub"><a href="https://github.com/langchain-ai/docs/blob/main/src/oss/langgraph/workflows-agents.mdx" target="_blank" rel="noopener noreferrer">LangGraph · Workflows and agents</a></p></div>
+<div class="card soft"><h3>Semana 2 · frameworks de evaluación y calidad</h3><p>Construir una evaluación repetible; distinguir tests deterministas, métricas de IA y evaluación humana. Elegir Ragas como primer framework, sin estudiar varios a la vez.</p><div class="checklist">
+<label class="check"><input data-id="acid-eval-1" type="checkbox"/><span>Crear 30 casos versionados: consultas normales, sin evidencia, recuperación incorrecta y casos adversariales; guardar respuesta esperada o rúbrica.</span></label>
+<label class="check"><input data-id="acid-eval-2" type="checkbox"/><span>Separar calidad de recuperación y generación; medir fidelidad al contexto, relevancia, latencia y costo. Calibrar jueces LLM contra revisión humana.</span></label>
+<label class="check"><input data-id="acid-eval-3" type="checkbox"/><span>Comparar dos versiones con el mismo dataset, registrar prompt/modelo/configuración y justificar umbrales de regresión.</span></label>
+<label class="check"><input data-id="acid-eval-4" type="checkbox"/><span>Agregar tests de integración para proveedor caído, timeout, resultado inválido y tool fallida; usar mocks para fallos deterministas.</span></label>
+</div><p class="sub"><a href="https://docs.ragas.io/en/latest/concepts/metrics/available_metrics/" target="_blank" rel="noopener noreferrer">Ragas · Métricas disponibles</a></p></div>
+<div class="card soft"><h3>Semana 3 · seguridad de agentes y guardrails</h3><p>Partir de tu conocimiento de IDOR y autorización por recurso. Extenderlo a herramientas y datos del agente; un filtro de contenido no sustituye permisos.</p><div class="checklist">
+<label class="check"><input data-id="acid-seg-1" type="checkbox"/><span>Implementar autorización en backend por identidad, tenant, recurso y acción; comprobar que cambiar un ID no permite leer datos ajenos.</span></label>
+<label class="check"><input data-id="acid-seg-2" type="checkbox"/><span>Validar schema y argumentos antes de cada tool call; aplicar allowlists, permisos mínimos y aprobación para acciones sensibles.</span></label>
+<label class="check"><input data-id="acid-seg-3" type="checkbox"/><span>Separar filtros de entrada/salida, autorización de herramientas y validación del resultado. Documentar dónde se aplica cada control.</span></label>
+<label class="check"><input data-id="acid-seg-4" type="checkbox"/><span>Repetir ataques directos e indirectos de prompt injection y demostrar que no amplían permisos; medir bloqueos y falsos rechazos.</span></label>
+</div><p class="sub"><a href="https://aws.amazon.com/blogs/machine-learning/implement-model-independent-safety-measures-with-amazon-bedrock-guardrails/" target="_blank" rel="noopener noreferrer">AWS · Guardrails independientes del modelo</a></p></div>
+<div class="card soft"><h3>Semana 4 · resiliencia, async y explicación técnica</h3><p>Integrar los tres bloques y demostrar comportamiento observable, con prioridad en comprensión y decisiones.</p><div class="checklist">
+<label class="check"><input data-id="acid-ops-1" type="checkbox"/><span>Explicar async/await, I/O bloqueante y concurrencia; aplicar timeouts, cancelación y límites de llamadas concurrentes.</span></label>
+<label class="check"><input data-id="acid-ops-2" type="checkbox"/><span>Añadir reintentos limitados para fallos transitorios e idempotencia para acciones; evitar duplicar efectos externos.</span></label>
+<label class="check"><input data-id="acid-ops-3" type="checkbox"/><span>Registrar trazas de decisiones, tools y errores sin secretos; versionar prompts, dataset y configuración de ejecución.</span></label>
+<label class="check"><input data-id="acid-ops-4" type="checkbox"/><span>Grabar una demostración de diez minutos: arquitectura, patrón elegido, evaluación antes/después, ataque bloqueado y fallo recuperado.</span></label>
+</div><p class="sub"><a href="https://docs.python.org/3/library/asyncio.html" target="_blank" rel="noopener noreferrer">Python · asyncio</a></p></div>
+<div class="card soft"><h3>Buenas prácticas en cada entrega</h3><ul><li>Separar API, lógica de negocio, acceso a datos y proveedor de modelos; usar interfaces pequeñas y dependencias explícitas.</li><li>Validar entradas y salidas con tipos y schemas; manejar errores específicos sin ocultarlos como resultados vacíos.</li><li>Probar comportamiento: tests unitarios de lógica, integración de API/tools y evaluaciones de respuestas por separado.</li><li>Aplicar formatter y lint; fijar versiones de dependencias y configuración por ambiente; guardar secretos fuera del código.</li><li>Revisar PRs pequeños y documentar decisiones con contexto, alternativas y consecuencias (ADR).</li><li>Definir cuándo una entrega está lista: pruebas relevantes, evaluación comparable, manejo de fallos y trazas sin información sensible.</li></ul><p><strong>Evidencia:</strong> un PR revisable, un ADR y un reporte de evaluación por semana. Explicar qué cambió, por qué y cómo se verificó.</p></div><div class="callout"><strong>Criterio para avanzar:</strong> puedes elegir y justificar un patrón, medir cambios con un dataset, bloquear una tool no autorizada fuera del modelo y explicar un fallo de integración. Si no, repite el ejercicio concreto; cuatro semanas es una referencia, no una garantía de dominio.</div><p><strong>Después:</strong> profundizar en RAG y Bedrock, explorar AgentCore con un laboratorio pequeño y continuar AWS/IAM y LLMOps. CI/CD se conserva como práctica transversal; no es la primera prioridad. Mantén el objetivo de AI Security Engineering y presenta tu experiencia actual como Software Developer con backend, AWS e integración de LLMs.</p></div></section>
+
 <section id="norte">
 <div class="grid g4">
 <div class="card">
@@ -635,7 +661,7 @@ Policy / Authorization Gateway
 </section>
 <section id="30dias">
 <div class="card">
-<h2>Primeros 30 días — empieza por aquí</h2>
+<h2>Laboratorio de seguridad · ejercicios complementarios</h2><p>Empieza por el bloque Prioridades actuales. Conserva este laboratorio para ampliar lo aprendido.</p>
 <div class="grid g2">
 <div>
 <h3>Semana 1 · preparar laboratorio</h3>
