@@ -30,3 +30,7 @@ Se importa desde la sección Semana y queda guardado únicamente en tu navegador
 ## Prioridades actualizadas — 9 de octubre de 2026
 
 La portada y guía incorporan un plan práctico de cuatro semanas: patrones de agentes, evaluación con datasets y Ragas, seguridad fuera del modelo, resiliencia y Python async. Incluye 15 tareas y criterios para avanzar. La guía añade prácticas de separación de responsabilidades, schemas, testing, lint, dependencias, secretos y ADRs. Se preservan las claves de progreso existentes. El sitio público no contiene notas, nombres de reclutadores ni documentos de entrevistas.
+
+## Guía de ingeniería segura
+
+`ingenieria-segura.html` desarrolla doce competencias, OpenSearch multiusuario, confidencialidad, matriz de pruebas, métricas, herramientas y un plan de 90 días. La ruta mensual de la portada se actualiza con este orden; el progreso sigue usando las mismas claves. Los estados de meses completados se conservan, pero conviene revisarlos si su alcance cambió. El calendario es orientativo y cada fase requiere evidencia.
