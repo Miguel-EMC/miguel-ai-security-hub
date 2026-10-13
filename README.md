@@ -34,3 +34,7 @@ La portada y guía incorporan un plan práctico de cuatro semanas: patrones de a
 ## Guía de ingeniería segura
 
 `ingenieria-segura.html` desarrolla doce competencias, OpenSearch multiusuario, confidencialidad, matriz de pruebas, métricas, herramientas y un plan de 90 días. La ruta mensual de la portada se actualiza con este orden; el progreso sigue usando las mismas claves. Los estados de meses completados se conservan, pero conviene revisarlos si su alcance cambió. El calendario es orientativo y cada fase requiere evidencia.
+
+## Repaso AWS y CTF
+
+Bloque de seis semanas integrado en el tiempo de estudio existente: IAM/costos, redes/datos, serverless, observabilidad/QA, Bedrock y OpenSearch. Distingue Skill Builder, sandbox propio y tareas autorizadas de QA. Incluye evidencias, cleanup y CTF como complemento.
